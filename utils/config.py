@@ -12,7 +12,7 @@ from utils.file_load import YamlLoad
 
 BASE_PATH = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
 CONFIG_FILE = os.path.join(BASE_PATH, 'config', 'config.yml')
-DATA_PATH = os.path.join(BASE_PATH, 'data')
+DATA_PATH = os.path.join(BASE_PATH, 'data', 'baidu.xlsx')
 DRIVER_PATH = os.path.join(BASE_PATH, 'drivers')
 LOG_PATH = os.path.join(BASE_PATH, 'log')
 REPORT_PATH = os.path.join(BASE_PATH, 'report')
