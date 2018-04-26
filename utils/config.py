@@ -12,7 +12,7 @@ from utils.file_load import YamlLoad
 
 BASE_PATH = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
 CONFIG_FILE = os.path.join(BASE_PATH, 'config', 'config.yml')
-DATA_PATH = os.path.join(BASE_PATH, 'data', 'baidu.xlsx')
+DATA_PATH = os.path.join(BASE_PATH, 'data')
 DRIVER_PATH = os.path.join(BASE_PATH, 'drivers')
 LOG_PATH = os.path.join(BASE_PATH, 'log')
 REPORT_PATH = os.path.join(BASE_PATH, 'report')
@@ -27,3 +27,9 @@ class Config(object):
         用YamlLoad读取返回的是一个list，第一项是默认的节，如果有多个节，可以传入index来获取。
         """
         return self.config[index].get(element)
+
+
+if __name__ == '__main__':
+    print(BASE_PATH)
+    print(DATA_PATH)
+    print(REPORT_PATH)

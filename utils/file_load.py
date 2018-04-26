@@ -27,7 +27,7 @@ class YamlLoad(object):
                 self._data = list(yaml.safe_load_all(f))
 
         return self._data
-    
+
 
 class SheetTypeError(Exception):
     pass
@@ -68,12 +68,15 @@ class ExcelLoad(object):
         if not self._data:
             workbook = open_workbook(self.excel)
             if type(self.sheet) not in [int, str]:
-                raise SheetTypeError('Please pass in <type int> or <type str>, not {0}'.format(type(self.sheet)))
-            elif type(self.sheet) == int:
+                raise SheetTypeError(
+                    'Please pass in <type int> or <type str>, not {0}'.format(
+                        type(
+                            self.sheet)))
+            elif isinstance(self.sheet, int):
                 s = workbook.sheet_by_index(self.sheet)
             else:
                 s = workbook.sheet_by_name(self.sheet)
-        
+
             if self.title_line:
                 title = s.row_values(0)  # 首行为title
                 for col in range(1, s.nrows):
@@ -84,14 +87,13 @@ class ExcelLoad(object):
                     # 遍历所有行，拼到self._data中
                     self._data.append(s.row_values(col))
         return self._data
-    
+
+
 if __name__ == '__main__':
-    test_yml_file = 'E:\Git\JYTest\data\\baidu.xlsx'
+    test_yml_file = 'E:\Git\JYTest\config\config.yml'
     yml_reader = YamlLoad(test_yml_file)
     print(yml_reader.data)
-    
-    test_excel_file = 'E:\Git\JYTest\config\config.yml'
-    excel_reader = ExcelLoad(test_excel_file)
+
+    test_excel_file = 'E:\Git\JYTest\data\\baidu.xlsx'
+    excel_reader = ExcelLoad(test_excel_file, title_line=True)
     print(excel_reader.data)
-    
-    
