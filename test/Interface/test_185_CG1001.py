@@ -21,8 +21,8 @@ class TestCG1001(unittest.TestCase):
     headers = json.dumps(Header().request_header(), ensure_ascii=False)
     
     def setUp(self):
-        HTTPClient.set_headers(self.headers)
         self.client = HTTPClient(url=self.interface_url, method='POST', headers=self.headers)
+        print(self.client)
     
     def test_cg1001(self):
         res = self.client.send()
