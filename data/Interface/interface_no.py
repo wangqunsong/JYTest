@@ -7,5 +7,5 @@
 # @Software: PyCharm
 """
 
-number = {'cg1001':'cg1001',
+interface_number = {'cg1001':'cg1001'
                 }

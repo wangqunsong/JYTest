@@ -7,28 +7,34 @@
 # @Software: PyCharm
 """
 
-import unittest
-from utils.config import Config
-from utils.client import HTTPClient
-from utils.log import logger
-from utils.assertion import assertHTTPCode
-from utils.base.header import Header
 import json
+import unittest
+from data.Interface.header import Header
+from data.Interface.cg1001_body import Body_CG1001
+from utils.assertion import assertHTTPCode
+from utils.client import HTTPClient
+from utils.config import Config
+from utils.log import logger
 
 
 class TestCG1001(unittest.TestCase):
-    interface_url  = Config().get('cg1001')
-    headers = json.dumps(Header().request_header(), ensure_ascii=False)
+    interface_url = Config().get('cg1001')
+    headers = Header().request_header()
+    body = Body_CG1001().request_body_cg1001()
     
     def setUp(self):
-        self.client = HTTPClient(url=self.interface_url, method='POST', headers=self.headers)
-        print(self.client)
+        self.client = HTTPClient()
+        self.client.set_data(self.body)
+        self.client.set_url(self.interface_url)
+        self.client.set_headers(self.headers)
     
     def test_cg1001(self):
-        res = self.client.send()
-        logger.debug(res.text)
-        assertHTTPCode(res, [200])
-        self.assertIn('s000000', res.text)
+        
+        res = self.client.post(url=self.interface_url, headers=json.dumps(self.headers), data=json.dumps(self.body))
+        print(res.text)
+        logger.error(res.text)
+        assertHTTPCode(res, [000000])
+        self.assertIn('000000', res.text)
         
 if __name__ == '__main__':
     test = TestCG1001()
