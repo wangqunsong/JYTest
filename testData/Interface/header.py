@@ -7,9 +7,6 @@
 # @Software: PyCharm
 """
 
-import time
-
-from data.Interface import interface_no
 from utils.base.generator import *
 
 

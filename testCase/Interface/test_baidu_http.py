@@ -9,10 +9,10 @@
 
 import unittest
 import requests
-from utils.config import Config
-from utils.client import HTTPClient
+from utils.configBase import Config
+from utils.configHttp import HTTPClient
 from utils.log import logger
-from utils.assertion import assertHTTPCode
+from utils.configAssertion import assertHTTPCode
 
 
 class TestBaiduHTTP(unittest.TestCase):

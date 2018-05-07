@@ -1,17 +1,34 @@
 # -*- coding: utf-8 -*-
 """
-# @Time    : 2018/4/25 14:44
+# @Time    : 2018/5/7 15:01
 # @Author  : wangqunsong
 # @Email   : wangqunsong@hotmail.com
-# @File    : file_load.py
+# @File    : configBase.py
 # @Software: PyCharm
 """
-
+import os
 import yaml
 import os
 from xlrd import open_workbook
 
+BASE_PATH = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
+CONFIG_FILE = os.path.join(BASE_PATH, 'config.yml')
+DATA_PATH = os.path.join(BASE_PATH, 'testData')
+DRIVER_PATH = os.path.join(BASE_PATH, 'drivers')
+LOG_PATH = os.path.join(BASE_PATH, 'testResult/log')
+REPORT_PATH = os.path.join(BASE_PATH, 'testResult/report')
 
+
+class Config(object):
+    def __init__(self, config=CONFIG_FILE):
+        self.config = YamlLoad(config).data
+
+    def get(self, element, index=0):
+        """
+        用YamlLoad读取返回的是一个list，第一项是默认的节，如果有多个节，可以传入index来获取。
+        """
+        return self.config[index].get(element)
+    
 class YamlLoad(object):
     def __init__(self, yaml_file):
         if os.path.exists(yaml_file):
@@ -90,6 +107,9 @@ class ExcelLoad(object):
 
 
 if __name__ == '__main__':
+    print(BASE_PATH)
+    print(DATA_PATH)
+    print(REPORT_PATH)
     test_yml_file = 'E:\Git\JYTest\config\config.yml'
     yml_reader = YamlLoad(test_yml_file)
     print(yml_reader.data)

@@ -10,13 +10,12 @@
 import json
 import unittest
 import requests
-from data.Interface.cg1001_body import Body_CG1001
-from utils.assertion import assertHTTPCode
-from utils.client import HTTPClient
-from utils.config import Config
+from testData.Interface.cg1001_body import Body_CG1001
+from testData.Interface.header import Header
+from utils.configAssertion import assertHTTPCode
+from utils.configBase import Config
+from utils.configHttp import HTTPClient
 from utils.log import logger
-from data.Interface.header import Header
-from utils.base.RSA import SHA1withRSA
 
 
 class TestCG1001(unittest.TestCase):

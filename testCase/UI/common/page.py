@@ -7,7 +7,7 @@
 # @Software: PyCharm
 """
 
-from test.UI.common import Browser
+from testCase.UI import Browser
 
 class Page(Browser):
     

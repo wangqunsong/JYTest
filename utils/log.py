@@ -11,7 +11,7 @@
 import os
 import logging
 from logging.handlers import TimedRotatingFileHandler
-from utils.config import LOG_PATH, Config
+from utils.configBase import LOG_PATH, Config
 
 
 class Logger(object):

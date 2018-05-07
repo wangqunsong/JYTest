@@ -3,7 +3,7 @@
 # @Time    : 2018/4/26 15:15
 # @Author  : wangqunsong
 # @Email   : wangqunsong@hotmail.com
-# @File    : client.py
+# @File    : configHttp.py
 # @Software: PyCharm
 """
 """

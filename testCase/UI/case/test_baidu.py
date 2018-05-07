@@ -10,9 +10,9 @@
 import time
 import unittest
 
-from test.UI.page.baidu_results_page import BaiDuMainPage, BaiDuResultPage
-from utils.config import Config, DATA_PATH
-from utils.file_load import ExcelLoad
+from testCase.UI import BaiDuMainPage, BaiDuResultPage
+from utils.configBase import Config, DATA_PATH
+from utils.configBase import ExcelLoad
 from utils.log import logger
 
 

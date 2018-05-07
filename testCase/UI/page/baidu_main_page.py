@@ -9,7 +9,7 @@
 
 from selenium.webdriver.common.by import By
 
-from test.UI.common import Page
+from testCase.UI import Page
 
 
 class BaiDuMainPage(Page):

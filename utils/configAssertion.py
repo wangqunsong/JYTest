@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-# @Time    : 2018/4/26 16:22
+# @Time    : 2018/5/7 14:58
 # @Author  : wangqunsong
 # @Email   : wangqunsong@hotmail.com
-# @File    : assertion.py
+# @File    : configAssertion.py
 # @Software: PyCharm
 """
 

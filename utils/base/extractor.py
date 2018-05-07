@@ -24,7 +24,7 @@ class JMESPathExtractor(object):
         
 
 if __name__ == '__main__':
-    from utils.client import HTTPClient
+    from utils.configHttp import HTTPClient
     res = HTTPClient(url='http://wthrcdn.etouch.cn/weather_mini?citykey=101010100').send()
     print(res.text)
     

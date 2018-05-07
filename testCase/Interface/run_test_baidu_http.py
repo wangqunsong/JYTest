@@ -9,9 +9,10 @@
 
 import time
 import unittest
-from test.Interface.test_baidu_http import TestBaiduHTTP
-from utils.config import REPORT_PATH
+
+from testCase.Interface.test_baidu_http import TestBaiduHTTP
 from utils.HTMLTestRunner import HTMLTestRunner
+from utils.configBase import REPORT_PATH
 
 if __name__ == '__main__':
     now = time.strftime("%Y-%m-%d %H-%M-%S", time.localtime(time.time()))

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-# @Time    : 2018/4/26 11:35
+# @Time    : 2018/5/7 14:57
 # @Author  : wangqunsong
 # @Email   : wangqunsong@hotmail.com
-# @File    : mail.py
+# @File    : configEmail.py
 # @Software: PyCharm
 """
 
@@ -14,8 +14,8 @@ from email.mime.text import MIMEText
 from socket import gaierror, error
 from utils.log import logger
 
+
 class Email(object):
-    
     def __init__(self, server, sender, password, receiver, title, message=None, path=None):
         '''
         初始化email
@@ -30,14 +30,14 @@ class Email(object):
         self.title = title
         self.message = message
         self.files = path
-
+        
         self.msg = MIMEMultipart('related')
-
+        
         self.server = server
         self.sender = sender
         self.receiver = receiver
         self.password = password
-        
+    
     def _attach_file(self, att_file):
         """将单个文件添加到附件列表中"""
         att = MIMEText(open('%s' % att_file, 'rb').read(), 'plain', 'utf-8')
@@ -46,16 +46,16 @@ class Email(object):
         att["Content-Disposition"] = 'attachment; filename="%s"' % file_name[-1]
         self.msg.attach(att)
         logger.info('attach file {}'.format(att_file))
-
+    
     def send(self):
         self.msg['Subject'] = self.title
         self.msg['From'] = self.sender
         self.msg['To'] = self.receiver
-    
+        
         # 邮件正文
         if self.message:
             self.msg.attach(MIMEText(self.message))
-    
+        
         # 添加附件，支持多个附件（传入list），或者单个附件（传入str）
         if self.files:
             if isinstance(self.files, list):
@@ -63,7 +63,7 @@ class Email(object):
                     self._attach_file(f)
             elif isinstance(self.files, str):
                 self._attach_file(self.files)
-    
+        
         # 连接服务器并发送
         try:
             smtp_server = smtplib.SMTP(self.server)  # 连接sever
