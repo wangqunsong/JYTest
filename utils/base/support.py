@@ -51,4 +51,7 @@ def encrypt(string, salt='', encrypt_way='MD5'):
     return hash_string.hexdigest()
 
 if __name__ == '__main__':
-    print(encrypt('100000307111111'))
+    private_key = '12345678'
+    sign_dict = 'Hello World!测试'
+    print(encrypt(string=sign_dict, salt=private_key, encrypt_way='SHA1'))
+    #print(sign(sign_dict=sign_dict, private_key=private_key, encrypt_way='SHA1'))

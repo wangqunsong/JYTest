@@ -1,4 +1,5 @@
 cg1001: http://10.10.10.185:10003/services/cgbiz/cg1001
+cg2002 : http://10.10.10.185:10003/services/cgbiz/cg2002
 target_url: https://www.baidu.com
 log:
     file_name: test.log

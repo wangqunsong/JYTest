@@ -8,6 +8,7 @@
 """
 
 import unittest
+import requests
 from utils.config import Config
 from utils.client import HTTPClient
 from utils.log import logger
@@ -15,14 +16,13 @@ from utils.assertion import assertHTTPCode
 
 
 class TestBaiduHTTP(unittest.TestCase):
-    target_url = Config().get('target_url')
-    
-    def setUp(self):
-        self.client = HTTPClient(url=self.target_url, method='GET')
     
     def test_baidu_http(self):
-        res = self.client.send()
+        url = 'http://10.10.10.185:10003/services/cgbiz/cg1001'
+        sign = '123456'
+        jsonEnc = 'abcdedg'
+        keyEnc = 'abcdedg'
+        merOrder_no = 'abcdedg'
+        res = requests.post(url=url, sign=sign, jsonEnc=jsonEnc, keyEnc=keyEnc,merOrder_no=merOrder_no)
         logger.debug(res.text)
-        assertHTTPCode(res, [200])
-        self.assertIn('百度一下，你就知道', res.text)
     
