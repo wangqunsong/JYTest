@@ -1,6 +1,14 @@
 cg1001: http://10.10.10.185:10003/services/cgbiz/cg1001
 cg2002 : http://10.10.10.185:10003/services/cgbiz/cg2002
 target_url: https://www.baidu.com
+email:
+    email_server : smtp.163.com
+    email_on_off : off
+    email_sender :
+    email_password :
+    email_receiver :
+    email_subject : 'JYT--接口测试报告'
+    email_content :
 log:
     file_name: test.log
     backup: 5
