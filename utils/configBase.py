@@ -12,22 +12,28 @@ import os
 from xlrd import open_workbook
 
 BASE_PATH = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
-CONFIG_FILE = os.path.join(BASE_PATH, 'testData/config/config.yml')   #.yml配置文件路径
-CASE_LIST_FILE = os.path.join(BASE_PATH, 'testData/config/caselist.txt')  # caselist（case列表）文件路径
-CASE_FILE = os.path.join(BASE_PATH, 'testCase') #测试case路径
+CONFIG_FILE = os.path.join(
+    BASE_PATH,
+    'testData/config/config.yml')  # .yml配置文件路径
+CASE_LIST_FILE = os.path.join(
+    BASE_PATH,
+    'testData/config/caselist.txt')  # caselist（case列表）文件路径
+CASE_FILE = os.path.join(BASE_PATH, 'testCase/Interface')  # 测试case路径
 DATA_PATH = os.path.join(BASE_PATH, 'testData')
 
-EMAIL_STYLE = os.path.join(BASE_PATH, 'testData/config/emailStyle.txt')  #邮件正文模板
-EMAIL_IMAGE = os.path.join(BASE_PATH, 'testData/config/JYT.png')  #邮件图片
-EMAIL_FILE = os.path.join(BASE_PATH, 'testData/config/JYT.zip')  #邮件图片
+EMAIL_STYLE = os.path.join(
+    BASE_PATH,
+    'testData/config/emailStyle.txt')  # 邮件正文模板
+EMAIL_IMAGE = os.path.join(BASE_PATH, 'testData/config/JYT.png')  # 邮件图片
+EMAIL_FILE = os.path.join(BASE_PATH, 'testData/config/JYT.zip')  # 邮件图片
 
-DRIVER_PATH = os.path.join(BASE_PATH, 'drivers')  #浏览器驱动文件路径
-LOG_PATH = os.path.join(BASE_PATH, 'testResult/log')  #日志路径
-REPORT_PATH = os.path.join(BASE_PATH, 'testResult/report')  #测试报告路径
+DRIVER_PATH = os.path.join(BASE_PATH, 'drivers')  # 浏览器驱动文件路径
+LOG_PATH = os.path.join(BASE_PATH, 'testResult/log')  # 日志路径
+REPORT_PATH = os.path.join(BASE_PATH, 'testResult/report')  # 测试报告路径
 
 
 class Config(object):
-    
+
     def __init__(self, config=CONFIG_FILE):
         self.config = YamlLoad(config).data
 
@@ -37,7 +43,7 @@ class Config(object):
         """
         return self.config[index].get(element)
 
-    
+
 class YamlLoad(object):
     def __init__(self, yaml_file):
         if os.path.exists(yaml_file):

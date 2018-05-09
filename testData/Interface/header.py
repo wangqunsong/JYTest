@@ -23,10 +23,9 @@ class Header(object):
         "content-length": "1657",
         "content-type": "application/json",
         "host": "10.10.10.185:10003"
-
     }
 
 
 if __name__ == '__main__':
-    h = Header().header
+    h = Header().headers
     print(h)

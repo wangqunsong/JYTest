@@ -22,7 +22,6 @@ import zipfile
 import glob
 
 
-
 class Email:
     def __init__(self):
         '''
@@ -33,7 +32,7 @@ class Email:
         self.sender = config.get('email_sender', 2)
         self.password = config.get('email_password', 2)
         self.content = config.get('email_content', 2)
-        
+
         # 邮件收件人列表
         self.receiver = config.get('email_receiver', 2)
 
@@ -45,7 +44,6 @@ class Email:
         self.logger = self.log.get_logger()
         self.msg = MIMEMultipart('related')
 
-
     def config_header(self):
         """
         配置邮件头：主题，发件人，收件人
@@ -53,7 +51,7 @@ class Email:
         """
         self.msg['subject'] = self.subject
         self.msg['from'] = self.sender
-        self.msg['to'] = ";".join(self.receiver)
+        self.msg['to'] = self.receiver
 
     def config_content(self):
         """
@@ -100,7 +98,7 @@ class Email:
             f = zipfile.ZipFile(zippath, 'w', zipfile.ZIP_DEFLATED)
             for file in files:
                 # 修改压缩文件的目录结构
-                f.write(file, '/report/'+os.path.basename(file))
+                f.write(file, '/report/' + os.path.basename(file))
             f.close()
 
             reportfile = open(zippath, 'rb').read()
@@ -139,11 +137,15 @@ class Email:
             except smtplib.SMTPAuthenticationError as e:
                 logger.exception('用户名密码验证失败！%s', e)
             else:
-                smtp_server.sendmail(self.sender, self.receiver.split(';'), self.msg.as_string())  # 发送邮件
+                smtp_server.sendmail(
+                    self.sender,
+                    self.receiver.split(';'),
+                    self.msg.as_string())  # 发送邮件
             finally:
                 smtp_server.quit()  # 断开连接
-                logger.info('发送邮件"{0}"成功! 收件人：{1}。如果没有收到邮件，请检查垃圾箱，'
-                            '同时检查收件人地址是否正确'.format(self.subject, self.receiver))
+                logger.info(
+                    '邮件"{0}"发送成功! 收件人：{1}'.format(
+                        self.subject, self.receiver))
 
 
 class MyEmail:
@@ -164,6 +166,5 @@ class MyEmail:
 
 
 if __name__ == "__main__":
-    email = Email()
+    email = MyEmail.get_email()
     email.send_email()
-    #email = MyEmail.get_email()
