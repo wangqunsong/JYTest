@@ -9,6 +9,9 @@ email:
     email_receiver : wangqunsong@jytpay.com
     email_subject : 'JYT--接口测试报告'
     email_content :
+sign :
+    public_key : 'D:\\keys\\merchant\\rsa_public_key_2048.pem'
+    private_key : 'D:\\keys\\merchant\\rsa_private_key_2048.pem'
 log:
     file_name: test.log
     backup: 5

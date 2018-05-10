@@ -84,3 +84,4 @@ def factory_choice_generator(values):
 
 if __name__ == '__main__':
     print(random_cerNO())
+    print(random_str(8,8))
