@@ -13,7 +13,6 @@ from Crypto.Hash import SHA
 from Crypto.PublicKey import RSA
 from utils.configBase import Config
 
-
 class Sign(object):
     '''
     签名类
@@ -26,6 +25,7 @@ class Sign(object):
         config = Config().get('sign')
         self.public_key = config.get('public_key', 2)
         self.private_key = config.get('private_key', 2)
+        
 
     def sign_string(self, unsigned_string):
         '''
@@ -73,9 +73,11 @@ class Sign(object):
 
 if __name__ == '__main__':
     sign = Sign()
-    test_string = "1234567890"
+    test_string = "Hello World!测试"
     sign_string = sign.sign_string(test_string)
-    keyEnc = sign.sign_to_hex(sign_string)
+    # encrypt_string = sign.encrypt_with_rsa(test_string)
+    # decrypt_string = sign.decrypt_with_rsa(encrypt_string)
+    sign_data = sign.sign_to_hex(sign_string)
     result = sign.validate_sign(test_string, sign_string)
     print("原始信息为:{0}\n签名后的信息为：{1}\n转换为hex字符串为：{2}\n验签结果为：{3}".format(
-        test_string, keyEnc, keyEnc, result))
+        test_string, sign_string, sign_data, result))

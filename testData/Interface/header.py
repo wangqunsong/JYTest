@@ -14,9 +14,6 @@ class Header(object):
     '''
     请求报文头类
     '''
-
-    merchantNo_value = "131010000011003"
-    merOrderNo_value = random_str(5, 10)
     headers = {
         "accept-encoding": "gzip, deflate",
         "connection": "Keep-Alive",

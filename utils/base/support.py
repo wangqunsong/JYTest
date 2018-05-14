@@ -13,7 +13,7 @@ from utils.log import logger
 class EncryptError(Exception):
     pass
 
-def sign(sign_dict, private_key=None, encrypt_way='MD5'):
+def sign(sign_dict, private_key=None, encrypt_way='SHA1'):
     '''
     传入待签名的字典，返回签名后字符串
     :param sign_dict:待签名的字典
@@ -36,7 +36,7 @@ def sign(sign_dict, private_key=None, encrypt_way='MD5'):
     return encrypt(string, salt=private_key, encrypt_way=encrypt_way)
 
 
-def encrypt(string, salt='', encrypt_way='MD5'):
+def encrypt(string, salt='', encrypt_way='SHA1'):
     u"""根据输入的string与加密盐，按照encrypt方式进行加密，并返回加密后的字符串"""
     string += salt
     if encrypt_way.upper() == 'MD5':

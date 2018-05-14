@@ -9,6 +9,7 @@
 
 
 import os
+import time
 import logging
 import threading
 from logging.handlers import TimedRotatingFileHandler
@@ -24,7 +25,11 @@ class Log(object):
         logging.root.setLevel(logging.INFO)
 
         config = Config().get('log')
-        self.log_file_name = config.get(
+        local_date = time.strftime(
+                "%Y-%m-%d %H-%M-%S",
+                time.localtime(
+                    time.time()))
+        self.log_file_name = local_date + '--' + config.get(
             'file_name', 2) if config and config.get('file_name') else 'test.log'
         self.backup_count = config.get(
             'backup', 2) if config and config.get('backup') else 5
