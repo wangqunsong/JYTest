@@ -17,7 +17,6 @@ class Header(object):
     headers = {
         "accept-encoding": "gzip, deflate",
         "connection": "Keep-Alive",
-        "content-length": "1657",
         "content-type": "application/json",
         "host": "10.10.10.185:10003"
     }

@@ -20,6 +20,7 @@ from utils.configBase import Config
 from utils.log import logger, MyLog
 import zipfile
 import glob
+import codecs
 
 
 class Email:
@@ -58,28 +59,30 @@ class Email:
         设置邮件主题
         :return:
         """
-        f = open(configBase.EMAIL_STYLE)
+        # with codecs.open(configBase.EMAIL_STYLE, encoding='utf-8') as f:
+        #     f.read()
+        f = codecs.open(configBase.EMAIL_STYLE, encoding='utf-8')
         content = f.read()
         f.close()
         content_plain = MIMEText(content, 'html', 'UTF-8')
         self.msg.attach(content_plain)
-        self.config_image()
+        #self.config_image()
 
-    def config_image(self):
-        """
-        配置邮件正文中的图片
-        :return:
-        """
-        # defined image path
-        image1_path = configBase.EMAIL_IMAGE
-        fp1 = open(image1_path, 'rb')
-        msgImage1 = MIMEImage(fp1.read())
-        # self.msg.attach(msgImage1)
-        fp1.close()
-
-        # defined image id
-        msgImage1.add_header('Content-ID', '<image1>')
-        self.msg.attach(msgImage1)
+    # def config_image(self):
+    #     """
+    #     配置邮件正文中的图片
+    #     :return:
+    #     """
+    #     # defined image path
+    #     image1_path = configBase.EMAIL_IMAGE
+    #     fp1 = open(image1_path, 'rb')
+    #     msgImage1 = MIMEImage(fp1.read())
+    #     # self.msg.attach(msgImage1)
+    #     fp1.close()
+    #
+    #     # defined image id
+    #     msgImage1.add_header('Content-ID', '<image1>')
+    #     self.msg.attach(msgImage1)
 
     def config_file(self):
         """
