@@ -1,7 +1,14 @@
 cg1001 : http://10.10.10.185:10003/services/cgbiz/cg1001
 cg2001 : http://10.10.10.185:10003/services/cgbiz/cg2001
 cg2002 : http://10.10.10.185:10003/services/cgbiz/cg2002
-target_url: https://www.baidu.com
+target_url: http://10.10.10.185:10003/services/cgbiz/
+url:
+    request_url :  http://10.10.10.185:10003/services/cgbiz/
+    sign_url : http://localhost:8080/run_sign
+    encrypt_json_url : http://localhost:8080/run_des_pkcs5
+    encrypt_key_url : http://localhost:8080/run_rsa_pkcs1
+excel:
+    case_path : 'E:\\Git\\JYTest\\testdata\\interface\\case.xlsx'
 email:
     email_server : smtp.163.com
     email_on_off : 'off'
@@ -10,9 +17,6 @@ email:
     email_receiver : wangqunsong@jytpay.com
     email_subject : 'JYT--接口测试报告'
     email_content :
-sign :
-    public_key : 'D:\\keys\\merchant\\rsa_public_key_2048.pem'
-    private_key : 'D:\\keys\\merchant\\rsa_private_key_2048.pem'
 log:
     file_name: test.log
     backup: 5

@@ -19,7 +19,7 @@ CASE_LIST_FILE = os.path.join(
     BASE_PATH,
     'testData/config/caselist.txt')  # caselist（case列表）文件路径
 CASE_FILE = os.path.join(BASE_PATH, 'testCase')  # 测试case路径
-DATA_PATH = os.path.join(BASE_PATH, 'testData')
+DATA_PATH = os.path.join(BASE_PATH, 'testData/Interface')
 
 EMAIL_STYLE = os.path.join(
     BASE_PATH,
@@ -122,13 +122,13 @@ class ExcelLoad(object):
 
 
 if __name__ == '__main__':
-    print(BASE_PATH)
-    print(DATA_PATH)
-    print(REPORT_PATH)
-    test_yml_file = 'E:\Git\JYTest\config\config.yml'
-    yml_reader = YamlLoad(test_yml_file)
-    print(yml_reader.data)
+    # print(BASE_PATH)
+    # print(DATA_PATH)
+    # print(REPORT_PATH)
+    # test_yml_file = 'E:\\Git\\JYTest\\testData\\config\\config.yml'
+    # yml_reader = YamlLoad(test_yml_file)
+    # print(yml_reader.data)
 
-    test_excel_file = 'E:\Git\JYTest\data\\baidu.xlsx'
+    test_excel_file = 'E:\\Git\\JYTest\\testdata\\interface\\case.xlsx'
     excel_reader = ExcelLoad(test_excel_file, title_line=True)
     print(excel_reader.data)

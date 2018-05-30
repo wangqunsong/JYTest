@@ -6,103 +6,127 @@
 # @File    : CG2001.py
 # @Software: PyCharm
 """
+
 import json
 import unittest
+
+import paramunittest
 import requests
 from utils.base.generator import *
 from testData.Interface.header import Header
-from utils.configAssertion import assertHTTPCode
 from utils.configBase import Config
+from utils.configExcel import ConfigExcel
 from utils.configHttp import HTTPClient
 from utils.log import logger
 
+excel_cg2001 = ConfigExcel().get_xls("case.xlsx", "CG2001")
 
+
+@paramunittest.parametrized(*excel_cg2001)
 class TestCG2001(unittest.TestCase):
     '''
-    TestCG1001测试类
+    TestCG2001测试类
     '''
-    merOrderNo = random_str(5, 10)
-    merchantNo = '131010000011003'
-    tradeDate = time.strftime("%Y%m%d", time.localtime())
-    tradeTime = time.strftime("%H%M%S", time.localtime())
-    tradeCode = 'CG2001'
     
-    acctNo = "13101000001100304"
-    
-    cg2001_json = {
-        "head": {
-            "version": "1.0.0",
-            "tradeType": "00",
-            "merchantNo": merchantNo,
-            "tradeDate": tradeDate,
-            "tradeTime": tradeTime,
-            "merOrderNo": merOrderNo,
-            "tradeCode": tradeCode
-        },
-        "body": {
-            "acctNo": acctNo
-        }
-    }
-    
-    interface_url = Config().get('cg2001')
-    http_header = Header().headers
-    request_string = json.dumps(cg2001_json)
-    
+    def setParameters(self, case_name, merchant_no, trade_code, acctNo,resp_code,resp_desc):
+        '''
+
+        :param case_name:
+        :param merchant_no:
+        :param trade_code_header:
+        :param flow_type:
+        :param resp_code:
+        :param resp_desc:
+        :param result_code:
+        :param result_msg_result_status:
+        :return:
+        '''
+        self.caseName = str(case_name)
+        self.merchantNo = str(merchant_no)
+        self.tradeCode = str(trade_code)
+        self.acctNo = str(acctNo)
+        self.respCode = str(resp_code)
+        self.respDesc = str(resp_desc)
+        self.response = None
     
     def setUp(self):
-        url1 = "http://localhost:8080/run_sign"
-        url2 = "http://localhost:8080/run_des_pkcs5"
-        url3 = "http://localhost:8080/run_rsa_pkcs1"
-        key = "12345678"
-        headers = {
-            "host": "127.0.0.1",
-            "Content-Type": "application/json",
-            "connection": "Keep-Alive",
-            "accept-encoding": "gzip, deflate"
+        self.interface_url = Config().get('cg2001')
+        self.sign_encrypt_url = "http://localhost:8080/sign_and_encrypt"
+        self.decrypt_and_verify_url = "http://localhost:8080/decrypt_and_verify"
+        self.encrypt_headers = Header.encrypt_decrypt_headers
+        self.http_header = Header().request_headers
+        self.merOrderNo = random_str(5, 10)
+        self.tradeDate = time.strftime("%Y%m%d", time.localtime())
+        self.tradeTime = time.strftime("%H%M%S", time.localtime())
+        cg2001_json = {
+            "head": {
+                "version": "1.0.0",
+                "tradeType": "00",
+                "merchantNo": self.merchantNo,
+                "tradeDate": self.tradeDate,
+                "tradeTime": self.tradeTime,
+                "merOrderNo": self.merOrderNo,
+                "tradeCode": self.tradeCode
+            },
+            "body": {
+                "acctNo": self.acctNo
+            }
         }
-        data_test1 = {
-            "unsign_request": self.request_string
-        }
-        data_test2 = {
-            "unencrypted_request": self.request_string
-        }
-        data_test3 = {
-            "unencrypted_key": key
-        }
-
-        response1 = requests.post(url1, data=json.dumps(data_test1), headers=headers)
-        response2 = requests.post(url2, data=json.dumps(data_test2), headers=headers)
-        response3 = requests.post(url3, data=json.dumps(data_test3), headers=headers)
-        sign = response1.text
-        print(sign + "\n")
-        jsonEnc = response2.text
-        print(jsonEnc + "\n")
-        keyEnc = response3.text
-        print(keyEnc + "\n")
         
+        # 加密
+        self.request_string = json.dumps(cg2001_json)
+        self.sign_and_encrypt_data = {
+            "unencrypt_string": self.request_string
+        }
+        sign_and_encrypt_response = requests.post(self.sign_encrypt_url, data=json.dumps(self.sign_and_encrypt_data),
+                                                  headers=self.encrypt_headers)
+        sign_and_encrypt_response_txt = json.loads(sign_and_encrypt_response.text)
         self.client = HTTPClient(
             url=self.interface_url,
             method='POST',
             timeout=10,
             headers=self.http_header)
         self.data = {
-            "sign": sign,
-            "jsonEnc": jsonEnc,
-            "keyEnc": keyEnc,
+            "sign": sign_and_encrypt_response_txt['sign'],
+            "jsonEnc": sign_and_encrypt_response_txt['jsonEnc'],
+            "keyEnc": sign_and_encrypt_response_txt['keyEnc'],
             "merchantNo": self.merchantNo,
             "merOrderNo": self.merOrderNo
         }
     
     def test_cg2001(self):
         try:
-            res = self.client.send(data=json.dumps(self.data))
-            print(res.status_code)
-            logger.error(res.text)
-            assertHTTPCode(res, [200])
-            self.assertEquals(200, res.status_code)
+            request_response = self.client.send(data=json.dumps(self.data))
+            request_response_txt = json.loads(request_response.text)
+            self.decrypt_and_verify_data = {
+                "sign": request_response_txt['sign'],
+                "jsonEnc": request_response_txt['jsonEnc'],
+                "keyEnc": request_response_txt['keyEnc']
+            }
+            self.decrypt_and_verify_response = requests.post(self.decrypt_and_verify_url,
+                                                             data=json.dumps(self.decrypt_and_verify_data),
+                                                             headers=self.encrypt_headers)
+            self.check_result()
         except requests.exceptions.ConnectTimeout:
             raise TimeoutError
     
+    def tearDown(self):
+        try:
+            pass
+        except requests.exceptions.ConnectTimeout:
+            raise TimeoutError
+    
+    def check_result(self):
+        self.result = json.loads(self.decrypt_and_verify_response.text)
+        self.check = json.loads(self.result['json'])
+        self.check2 = json.dumps(self.check['head'])
+        self.check3 = json.loads(self.check2)
+        
+        logger.error(self.decrypt_and_verify_response.text)
+        #self.assertEqual(self.check3['respCode'], self.respCode)
+        print("余额查询成功，测试结果为：" + self.check3['respDesc'])
+        print("余额查询响应报文为：")
+        print(self.check)
 
 
 if __name__ == '__main__':

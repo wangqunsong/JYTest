@@ -14,14 +14,22 @@ class Header(object):
     '''
     请求报文头类
     '''
-    headers = {
+    request_headers = {
         "accept-encoding": "gzip, deflate",
         "connection": "Keep-Alive",
         "content-type": "application/json",
         "host": "10.10.10.185:10003"
     }
+    encrypt_decrypt_headers = {
+            "host": "127.0.0.1",
+            "Content-Type": "application/json",
+            "connection": "Keep-Alive",
+            "accept-encoding": "gzip, deflate"
+        }
 
 
 if __name__ == '__main__':
-    h = Header().headers
-    print(h)
+    h1 = Header().request_headers
+    h2 = Header().encrypt_decrypt_headers
+    print(h1)
+    print(h2)
