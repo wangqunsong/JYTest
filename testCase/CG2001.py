@@ -9,7 +9,6 @@
 
 import json
 import unittest
-
 import paramunittest
 import requests
 from utils.base.generator import *
@@ -27,8 +26,15 @@ class TestCG2001(unittest.TestCase):
     '''
     TestCG2001测试类
     '''
-    
-    def setParameters(self, case_name, merchant_no, trade_code, acctNo,resp_code,resp_desc):
+
+    def setParameters(
+            self,
+            case_name,
+            merchant_no,
+            trade_code,
+            acctNo,
+            resp_code,
+            resp_desc):
         '''
 
         :param case_name:
@@ -48,7 +54,7 @@ class TestCG2001(unittest.TestCase):
         self.respCode = str(resp_code)
         self.respDesc = str(resp_desc)
         self.response = None
-    
+
     def setUp(self):
         self.interface_url = Config().get('cg2001')
         self.sign_encrypt_url = "http://localhost:8080/sign_and_encrypt"
@@ -72,15 +78,17 @@ class TestCG2001(unittest.TestCase):
                 "acctNo": self.acctNo
             }
         }
-        
+
         # 加密
         self.request_string = json.dumps(cg2001_json)
         self.sign_and_encrypt_data = {
             "unencrypt_string": self.request_string
         }
-        sign_and_encrypt_response = requests.post(self.sign_encrypt_url, data=json.dumps(self.sign_and_encrypt_data),
-                                                  headers=self.encrypt_headers)
-        sign_and_encrypt_response_txt = json.loads(sign_and_encrypt_response.text)
+        sign_and_encrypt_response = requests.post(
+            self.sign_encrypt_url, data=json.dumps(
+                self.sign_and_encrypt_data), headers=self.encrypt_headers)
+        sign_and_encrypt_response_txt = json.loads(
+            sign_and_encrypt_response.text)
         self.client = HTTPClient(
             url=self.interface_url,
             method='POST',
@@ -93,7 +101,7 @@ class TestCG2001(unittest.TestCase):
             "merchantNo": self.merchantNo,
             "merOrderNo": self.merOrderNo
         }
-    
+
     def test_cg2001(self):
         try:
             request_response = self.client.send(data=json.dumps(self.data))
@@ -103,25 +111,25 @@ class TestCG2001(unittest.TestCase):
                 "jsonEnc": request_response_txt['jsonEnc'],
                 "keyEnc": request_response_txt['keyEnc']
             }
-            self.decrypt_and_verify_response = requests.post(self.decrypt_and_verify_url,
-                                                             data=json.dumps(self.decrypt_and_verify_data),
-                                                             headers=self.encrypt_headers)
+            self.decrypt_and_verify_response = requests.post(
+                self.decrypt_and_verify_url, data=json.dumps(
+                    self.decrypt_and_verify_data), headers=self.encrypt_headers)
             self.check_result()
         except requests.exceptions.ConnectTimeout:
             raise TimeoutError
-    
+
     def tearDown(self):
         try:
             pass
         except requests.exceptions.ConnectTimeout:
             raise TimeoutError
-    
+
     def check_result(self):
         self.result = json.loads(self.decrypt_and_verify_response.text)
         self.check = json.loads(self.result['json'])
         self.check2 = json.dumps(self.check['head'])
         self.check3 = json.loads(self.check2)
-        
+
         logger.error(self.decrypt_and_verify_response.text)
         #self.assertEqual(self.check3['respCode'], self.respCode)
         print("余额查询成功，测试结果为：" + self.check3['respDesc'])
