@@ -1,59 +1,43 @@
 # -*- coding: utf-8 -*-
 """
-# @Time    : 2018/5/24 17:46
+# @Time    : 2018/5/30 11:30
 # @Author  : wangqunsong
 # @Email   : wangqunsong@hotmail.com
-# @File    : CG2001.py
+# @File    : CG2001_new.py
 # @Software: PyCharm
 """
 
 import json
+import xlrd
+import os
 import unittest
 import paramunittest
 import requests
 from utils.base.generator import *
 from testData.Interface.header import Header
-from utils.configBase import Config
+from utils.configBase import Config, DATA_PATH
 from utils.configExcel import ConfigExcel
 from utils.configHttp import HTTPClient
 from utils.log import logger
 
-excel_cg2001 = ConfigExcel().get_xls_row("case.xlsx", "CG2001")
+excel_cg2001_row = ConfigExcel().get_xls_row("case.xlsx", "CG2001")
+excel_cg2001_col = ConfigExcel().get_xls_cols("case.xlsx", "CG2001")
 
-
-@paramunittest.parametrized(*excel_cg2001)
+@paramunittest.parametrized(*excel_cg2001_row)
 class TestCG2001(unittest.TestCase):
     '''
     TestCG2001测试类
     '''
-
-    def setParameters(
-            self,
-            case_name,
-            merchant_no,
-            trade_code,
-            acctNo,
-            resp_code,
-            resp_desc):
-        '''
-
-        :param case_name:
-        :param merchant_no:
-        :param trade_code_header:
-        :param flow_type:
-        :param resp_code:
-        :param resp_desc:
-        :param result_code:
-        :param result_msg_result_status:
-        :return:
-        '''
-        self.caseName = str(case_name)
-        self.merchantNo = str(merchant_no)
-        self.tradeCode = str(trade_code)
-        self.acctNo = str(acctNo)
-        self.respCode = str(resp_code)
-        self.respDesc = str(resp_desc)
-        self.response = None
+    
+    def setParameters(self,*args):
+        xlsPath = os.path.join(DATA_PATH, 'case.xlsx')
+        Workbook = xlrd.open_workbook(xlsPath)
+        sheet = Workbook.sheet_by_name('CG2001')
+        params = sheet.row_values(0)
+        self.me = []
+        for i in range(len(params)):
+            self.me.append(str(params[i]))
+        
 
     def setUp(self):
         self.interface_url = Config().get('cg2001')
@@ -68,14 +52,14 @@ class TestCG2001(unittest.TestCase):
             "head": {
                 "version": "1.0.0",
                 "tradeType": "00",
-                "merchantNo": self.merchantNo,
+                "merchantNo": self.me[1],
                 "tradeDate": self.tradeDate,
                 "tradeTime": self.tradeTime,
                 "merOrderNo": self.merOrderNo,
-                "tradeCode": self.tradeCode
+                "tradeCode": self.me[2]
             },
             "body": {
-                "acctNo": self.acctNo
+                "acctNo": self.me[3]
             }
         }
 
@@ -98,7 +82,7 @@ class TestCG2001(unittest.TestCase):
             "sign": sign_and_encrypt_response_txt['sign'],
             "jsonEnc": sign_and_encrypt_response_txt['jsonEnc'],
             "keyEnc": sign_and_encrypt_response_txt['keyEnc'],
-            "merchantNo": self.merchantNo,
+            "merchantNo": self.me[1],
             "merOrderNo": self.merOrderNo
         }
 
