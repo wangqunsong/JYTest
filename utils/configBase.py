@@ -14,18 +14,18 @@ from xlrd import open_workbook
 BASE_PATH = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0]
 CONFIG_FILE = os.path.join(
     BASE_PATH,
-    'testData/config/config.yml')  # .yml配置文件路径
+    'testConfig/ConfigBase/config.yml')  # .yml配置文件路径
 CASE_LIST_FILE = os.path.join(
     BASE_PATH,
-    'testData/config/caselist.txt')  # caselist（case列表）文件路径
+    'testConfig/ConfigBase/caselist.txt')  # caselist（case列表）文件路径
 CASE_FILE = os.path.join(BASE_PATH, 'testCase')  # 测试case路径
-DATA_PATH = os.path.join(BASE_PATH, 'testData/Interface')
+DATA_PATH = os.path.join(BASE_PATH, 'testCase/CaseList')
 
 EMAIL_STYLE = os.path.join(
     BASE_PATH,
-    'testData/config/emailStyle.txt')  # 邮件正文模板
+    'testConfig/ConfigEmail/emailStyle.txt')  # 邮件正文模板
 #EMAIL_IMAGE = os.path.join(BASE_PATH, 'testData/config/JYT.png')  # 邮件图片
-EMAIL_FILE = os.path.join(BASE_PATH, 'testData/config/JYT.zip')  # 邮件图片
+EMAIL_FILE = os.path.join(BASE_PATH, 'testConfig/ConfigEmail/JYT.zip')  # 邮件附件
 
 DRIVER_PATH = os.path.join(BASE_PATH, 'drivers')  # 浏览器驱动文件路径
 LOG_PATH = os.path.join(BASE_PATH, 'testResult/log')  # 日志路径

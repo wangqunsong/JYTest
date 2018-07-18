@@ -9,16 +9,18 @@
 
 import json
 import unittest
+
 import paramunittest
 import requests
+
 from utils.base.generator import *
-from testData.Interface.header import Header
 from utils.configBase import Config
 from utils.configExcel import ConfigExcel
 from utils.configHttp import HTTPClient
+from utils.configHttpHeader import Header
 from utils.log import logger
 
-excel_cg2002 = ConfigExcel().get_xls("case.xlsx", "CG2002")
+excel_cg2002 = ConfigExcel().get_xls_row("caselist.xlsx", "CG2002")
 
 
 @paramunittest.parametrized(*excel_cg2002)

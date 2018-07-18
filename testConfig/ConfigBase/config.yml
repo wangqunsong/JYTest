@@ -4,9 +4,9 @@ cg2002 : http://10.10.10.185:10003/services/cgbiz/cg2002
 target_url: http://10.10.10.185:10003/services/cgbiz/
 url:
     request_url :  http://10.10.10.185:10003/services/cgbiz/
-    sign_url : http://localhost:8080/run_sign
-    encrypt_json_url : http://localhost:8080/run_des_pkcs5
-    encrypt_key_url : http://localhost:8080/run_rsa_pkcs1
+    sign_url :
+    encrypt_json_url :
+    encrypt_key_url :
 excel:
     case_path : 'E:\\Git\\JYTest\\testdata\\interface\\case.xlsx'
 email:
