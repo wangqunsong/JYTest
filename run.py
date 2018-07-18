@@ -77,7 +77,7 @@ class Test(object):
                 "%Y-%m-%d %H-%M-%S",
                 time.localtime(
                     time.time()))
-            report = self.reportPath + '\\' + now + '--' + 'JYTest-Report.html'
+            report = self.reportPath + now + '--' + 'JYTest-Report.html'
             #report = self.reportPath + '\\' + 'HTTP-Report.html'
             if suite is not None:
                 self.logger.info("********测试开始********")
