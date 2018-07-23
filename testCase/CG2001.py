@@ -9,10 +9,8 @@
 
 import json
 import unittest
-
 import paramunittest
 import requests
-
 from utils.base.generator import *
 from utils.configBase import Config
 from utils.configExcel import ConfigExcel
