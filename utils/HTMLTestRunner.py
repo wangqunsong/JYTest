@@ -1,11 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-# @Time    : 2018/4/25 17:53
-# @Author  : wangqunsong
-# @Email   : wangqunsong@hotmail.com
-# @File    : HTMLTestRunner.py.py
-# @Software: PyCharm
-"""
 
 """
 A TestRunner for use with the Python unit testing framework. It

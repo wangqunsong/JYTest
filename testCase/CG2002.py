@@ -9,10 +9,8 @@
 
 import json
 import unittest
-
 import paramunittest
 import requests
-
 from utils.base.generator import *
 from utils.configBase import Config
 from utils.configExcel import ConfigExcel
@@ -67,8 +65,8 @@ class TestCG2002(unittest.TestCase):
 
     def setUp(self):
         self.interface_url = Config().get('cg2002')
-        self.sign_encrypt_url = "http://localhost:8080/sign_and_encrypt"
-        self.decrypt_and_verify_url = "http://localhost:8080/decrypt_and_verify"
+        self.sign_encrypt_url = "http://192.168.20.128:8080/sign_and_encrypt"
+        self.decrypt_and_verify_url = "http://192.168.20.128:8080/decrypt_and_verify"
         self.encrypt_headers = Header.encrypt_decrypt_headers
         self.http_header = Header().request_headers
         self.merOrderNo = random_str(5, 10)

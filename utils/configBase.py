@@ -24,12 +24,12 @@ DATA_PATH = os.path.join(BASE_PATH, 'testCase/CaseList')
 EMAIL_STYLE = os.path.join(
     BASE_PATH,
     'testConfig/ConfigEmail/emailStyle.txt')  # 邮件正文模板
-#EMAIL_IMAGE = os.path.join(BASE_PATH, 'testData/config/JYT.png')  # 邮件图片
+EMAIL_IMAGE = os.path.join(BASE_PATH, 'testConfig/ConfigEmail/JYT.png')  # 邮件图片
 EMAIL_FILE = os.path.join(BASE_PATH, 'testConfig/ConfigEmail/JYT.zip')  # 邮件附件
 
 DRIVER_PATH = os.path.join(BASE_PATH, 'drivers')  # 浏览器驱动文件路径
-LOG_PATH = os.path.join(BASE_PATH, 'testResult/log')  # 日志路径
-REPORT_PATH = os.path.join(BASE_PATH, 'testResult/report')  # 测试报告路径
+LOG_PATH = os.path.join(BASE_PATH, 'testResult/log/')  # 日志路径
+REPORT_PATH = os.path.join(BASE_PATH, 'testResult/report/')  # 测试报告路径
 
 
 class Config(object):
