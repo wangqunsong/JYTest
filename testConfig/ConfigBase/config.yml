@@ -1,6 +1,9 @@
+submit : http://10.10.10.185:9008/dep-page-service/submit
+submitAll : http://10.10.10.185:9008/dep-page-service/submitAll
 cg1001 : http://10.10.10.185:10003/services/cgbiz/cg1001
 cg2001 : http://10.10.10.185:10003/services/cgbiz/cg2001
 cg2002 : http://10.10.10.185:10003/services/cgbiz/cg2002
+cg1044 : http://10.10.10.185:9008/dep-page-service/cg1044
 target_url: http://10.10.10.185:10003/services/cgbiz/
 url:
     request_url :  http://10.10.10.185:10003/services/cgbiz/

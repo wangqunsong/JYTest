@@ -11,17 +11,17 @@ import json
 import unittest
 import paramunittest
 import requests
+from testCase.caseParams.CG1044_params import *
 from utils.base.generator import *
 from utils.configBase import Config
-from utils.configExcel import ConfigExcel
+#from utils.configExcel import ConfigExcel
 from utils.configHttp import HTTPClient
 from utils.configHttpHeader import Header
 from utils.log import logger
 
-excel_cg1044 = ConfigExcel().get_xls_row("caselist.xlsx", "CG1044")
+#excel_cg1044 = ConfigExcel().get_xls_row("caselist.xlsx", "CG1044")
 
-
-@paramunittest.parametrized(*excel_cg1044)
+@paramunittest.parametrized(*cg1044)
 class TestCG1044(unittest.TestCase):
     '''
     TestCG1044测试类
@@ -32,9 +32,15 @@ class TestCG1044(unittest.TestCase):
             case_name,
             merchant_no,
             trade_code,
-            query_flow,
-            trade_code_body,
-            flow_type,
+            registerPhone,
+            custType,
+            cardNo,
+            code,
+            name,
+            phone,
+            mailAddr,
+            callbackUrl,
+            responsePath,
             resp_code,
             resp_desc,
             result_code,
@@ -54,9 +60,15 @@ class TestCG1044(unittest.TestCase):
         self.caseName = str(case_name)
         self.merchantNo = str(merchant_no)
         self.tradeCode = str(trade_code)
-        self.queryFlow = str(query_flow)
-        self.flowType = str(flow_type)
-        self.tradeCode_body = str(trade_code_body)
+        self.registerPhone = str(registerPhone)
+        self.callbackUrl = str(callbackUrl)
+        self.responsePath = str(responsePath)
+        self.custType = str(custType)
+        self.cardNo = str(cardNo)
+        self.code = str(code)
+        self.name = str(name)
+        self.phone = str(phone)
+        self.mailAddr = str(mailAddr)
         self.respCode = str(resp_code)
         self.respDesc = str(resp_desc)
         self.resultCode = str(result_code)
@@ -67,12 +79,18 @@ class TestCG1044(unittest.TestCase):
         self.interface_url = Config().get('cg1044')
         self.sign_encrypt_url = "http://192.168.20.128:8080/sign_and_encrypt"
         self.decrypt_and_verify_url = "http://192.168.20.128:8080/decrypt_and_verify"
+        
+        self.submit_url = "http://10.10.10.185:9008/dep-page-service/submit"
+        self.submit_all_url = "http://10.10.10.185:9008/dep-page-service/submitAll"
+        self.send_message_url = "http://10.10.10.185:9008/dep-page-service/sendSms?"
+        
+        
         self.encrypt_headers = Header.encrypt_decrypt_headers
-        self.http_header = Header().request_headers
+        self.http_header = Header().request_headers_page
         self.merOrderNo = random_str(5, 10)
         self.tradeDate = time.strftime("%Y%m%d", time.localtime())
         self.tradeTime = time.strftime("%H%M%S", time.localtime())
-        cg2002_json = {
+        cg1044_json = {
             "head": {
                 "version": "1.0.0",
                 "tradeType": "00",
@@ -83,14 +101,15 @@ class TestCG1044(unittest.TestCase):
                 "tradeCode": self.tradeCode
             },
             "body": {
-                "tradeCode": self.tradeCode_body,
-                "queryFlow": self.queryFlow,
-                "flowType": self.flowType
+                "registerPhone": self.registerPhone,
+                "custType": self.custType,
+                "callbackUrl": self.callbackUrl,
+                "responsePath" : self.responsePath
             }
         }
 
-        # 加密
-        self.request_string = json.dumps(cg2002_json)
+        #签名和加密
+        self.request_string = json.dumps(cg1044_json)
         self.sign_and_encrypt_data = {
             "unencrypt_string": self.request_string
         }
@@ -99,6 +118,8 @@ class TestCG1044(unittest.TestCase):
                 self.sign_and_encrypt_data), headers=self.encrypt_headers)
         sign_and_encrypt_response_txt = json.loads(
             sign_and_encrypt_response.text)
+        
+        #请求
         self.client = HTTPClient(
             url=self.interface_url,
             method='POST',
@@ -108,12 +129,13 @@ class TestCG1044(unittest.TestCase):
             "sign": sign_and_encrypt_response_txt['sign'],
             "jsonEnc": sign_and_encrypt_response_txt['jsonEnc'],
             "keyEnc": sign_and_encrypt_response_txt['keyEnc'],
-            "merchantNo": self.merchantNo,
-            "merOrderNo": self.merOrderNo
+            "merchantNo": self.merchantNo
+           # "merOrderNo": self.merOrderNo
         }
 
-    def test_cg2001(self):
-        #解密和验签
+    def test_cg1044(self):
+        
+        #请求返回的密文
         try:
             request_response = self.client.send(data=json.dumps(self.data))
             request_response_txt = json.loads(request_response.text)
@@ -122,6 +144,13 @@ class TestCG1044(unittest.TestCase):
                 "jsonEnc": request_response_txt['jsonEnc'],
                 "keyEnc": request_response_txt['keyEnc']
             }
+            
+            #获取cookie和token
+            token = request_response.cookies.items()[0][1]
+            cookies = request_response.cookies
+            
+            
+            #解密和验签
             self.decrypt_and_verify_response = requests.post(
                 self.decrypt_and_verify_url, data=json.dumps(
                     self.decrypt_and_verify_data), headers=self.encrypt_headers)

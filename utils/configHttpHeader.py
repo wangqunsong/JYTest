@@ -23,6 +23,13 @@ class Header(object):
             "connection": "Keep-Alive",
             "accept-encoding": "gzip, deflate"
         }
+    
+    request_headers_page = {
+        "accept-encoding": "gzip, deflate",
+        "connection": "Keep-Alive",
+        "content-type": "application/json",
+        "host": "10.10.10.185:9008"
+    }
 
 
 if __name__ == '__main__':
