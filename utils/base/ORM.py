@@ -23,7 +23,7 @@ class Expr(object):
     def update(self, **kwargs):
         _keys = []
         _params = []
-        for key, val in kwargs.iteritems():
+        for key, val in kwargs.items():
             if val is None or key not in self.model.fields:
                 continue
             _keys.append(key)
@@ -68,6 +68,7 @@ class MetaModel(type):
 
 class Model(object):
     __metaclass__ = MetaModel
+    db_table = MetaModel
 
     def save(self):
         insert = 'insert ignore into %s(%s) values (%s);' % (

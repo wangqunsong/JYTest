@@ -20,7 +20,6 @@ from utils.configHttpHeader import Header
 from utils.log import logger
 
 #excel_cg1044 = ConfigExcel().get_xls_row("caselist.xlsx", "CG1044")
-
 @paramunittest.parametrized(*cg1044)
 class TestCG1044(unittest.TestCase):
     '''
@@ -29,9 +28,9 @@ class TestCG1044(unittest.TestCase):
 
     def setParameters(
             self,
-            case_name,
-            merchant_no,
-            trade_code,
+            caseName,
+            merchantNo,
+            tradeCode,
             registerPhone,
             custType,
             cardNo,
@@ -41,10 +40,7 @@ class TestCG1044(unittest.TestCase):
             mailAddr,
             callbackUrl,
             responsePath,
-            resp_code,
-            resp_desc,
-            result_code,
-            result_msg):
+            respCode):
         '''
 
         :param case_name:
@@ -57,9 +53,9 @@ class TestCG1044(unittest.TestCase):
         :param result_msg_result_status:
         :return:
         '''
-        self.caseName = str(case_name)
-        self.merchantNo = str(merchant_no)
-        self.tradeCode = str(trade_code)
+        self.caseName = str(caseName)
+        self.merchantNo = str(merchantNo)
+        self.tradeCode = str(tradeCode)
         self.registerPhone = str(registerPhone)
         self.callbackUrl = str(callbackUrl)
         self.responsePath = str(responsePath)
@@ -69,11 +65,7 @@ class TestCG1044(unittest.TestCase):
         self.name = str(name)
         self.phone = str(phone)
         self.mailAddr = str(mailAddr)
-        self.respCode = str(resp_code)
-        self.respDesc = str(resp_desc)
-        self.resultCode = str(result_code)
-        self.resultMsg = str(result_msg)
-        self.response = None
+        self.respCode = str(respCode)
 
     def setUp(self):
         self.interface_url = Config().get('cg1044')
@@ -150,6 +142,65 @@ class TestCG1044(unittest.TestCase):
             cookies = request_response.cookies
             
             
+            #获取验证码
+            self.client = HTTPClient(
+                url=self.send_message_url,
+                method='POST',
+                timeout=10,
+                headers=self.http_header)
+            self.data_message = {
+                "phoneNo": self.phone,
+                "token": token,
+                "merchantNo": self.merchantNo
+                # "merOrderNo": self.merOrderNo
+            }
+
+            request_response_message = self.client.send(data=json.dumps(self.data_message))
+            message_token = request_response_message.cookies.items()[0][1]
+            message_cookies = request_response_message.cookies
+            
+            #submit
+            self.client = HTTPClient(
+                url=self.submit_url,
+                method='POST',
+                timeout=10,
+                headers=self.http_header)
+            self.data_submit = {
+                "cardNo": self.cardNo,
+                "code": 485125,
+                "idNo": self.idNo,
+                "name" : self.name,
+                "phone": self.phone,
+                "smsCode": 485125,
+                "mobile": self.registerPhone,
+                "merchantNo" : self.merchantNo,
+                "merOrderNo" : self.merOrderNo,
+                "id": message_cookies,
+                "token": message_token,
+                "mailAddr": self.mailAddr
+            }
+            
+            request_response_submit = self.client.send(data=json.dumps(self.data_submit))
+            submit_token = request_response_submit.cookies.items()[0][1]
+            submit_cookies = request_response_submit.cookies
+            
+            
+            #submitAll
+            self.client = HTTPClient(
+                url=self.submit_all_url,
+                method='POST',
+                timeout=10,
+                headers=self.http_header)
+            self.data_submitAll = {
+                "payPwd": 111111,
+                "id": submit_cookies,
+                "token": submit_token,
+            }
+
+            request_response_submitAll = self.client.send(data=json.dumps(self.data_submitAll))
+            
+            
+            
             #解密和验签
             self.decrypt_and_verify_response = requests.post(
                 self.decrypt_and_verify_url, data=json.dumps(
@@ -157,7 +208,7 @@ class TestCG1044(unittest.TestCase):
             self.check_result()
         except requests.exceptions.ConnectTimeout:
             raise TimeoutError
-
+        
     def tearDown(self):
         try:
             pass

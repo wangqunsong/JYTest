@@ -29,6 +29,7 @@ merchantNo = "131010000011003"
 cg1044 = (
     {"caseName": "注册成功_投资人",
      "registerPhone": random_phone_number,
+     "merchantNo": "131010000011003",
      "custType": "00",
      "callbackUrl": callbackUrl,
      "responsePath": responsePath,
@@ -36,11 +37,14 @@ cg1044 = (
      "code": "485125",
      "name": random_name,
      "phone": random_phone_number,
-     "mailAddr": random_email
+     "mailAddr": random_email,
+     "tradeCode": "CG1044",
+     "respCode": "000000"
      },
     {
         "caseName": "注册成功_融资人",
         "registerPhone": random_phone_number,
+        "merchantNo": "131010000011003",
         "custType": "03",
         "callbackUrl": callbackUrl,
         "responsePath": responsePath,
@@ -48,6 +52,8 @@ cg1044 = (
         "code": "485125",
         "name": random_name,
         "phone": random_phone_number,
-        "mailAddr": random_email
-    },
+        "mailAddr": random_email,
+        "tradeCode": "CG1044",
+        "respCode": "000000"
+    }
 )
