@@ -57,8 +57,8 @@ class TestCG2001(unittest.TestCase):
 
     def setUp(self):
         self.interface_url = Config().get('cg2001')
-        self.sign_encrypt_url = "http://192.168.20.128:8080/sign_and_encrypt"
-        self.decrypt_and_verify_url = "http://192.168.20.128:8080/decrypt_and_verify"
+        self.sign_encrypt_url = "http://192.168.20.128:8081/sign_and_encrypt"
+        self.decrypt_and_verify_url = "http://192.168.20.128:8081/decrypt_and_verify"
         self.encrypt_headers = Header.encrypt_decrypt_headers
         self.http_header = Header().request_headers
         self.merOrderNo = random_str(5, 10)
@@ -106,6 +106,9 @@ class TestCG2001(unittest.TestCase):
         try:
             request_response = self.client.send(data=json.dumps(self.data))
             request_response_txt = json.loads(request_response.text)
+            
+            print(11111111111111)
+            print(request_response_txt)
             self.decrypt_and_verify_data = {
                 "sign": request_response_txt['sign'],
                 "jsonEnc": request_response_txt['jsonEnc'],

@@ -6,7 +6,7 @@
 # @File    : CG1044_params.py
 # @Software: PyCharm
 """
-from utils.base.generator import random_phone_number
+from utils.base.generator import random_phone_number, random_cerNO
 from utils.base.generator import random_cardNo
 from utils.base.generator import random_name
 from utils.base.generator import random_email
@@ -28,31 +28,33 @@ merchantNo = "131010000011003"
 
 cg1044 = (
     {"caseName": "注册成功_投资人",
-     "registerPhone": random_phone_number,
+     "registerPhone": random_phone_number(),
      "merchantNo": "131010000011003",
      "custType": "00",
      "callbackUrl": callbackUrl,
      "responsePath": responsePath,
-     "cardNo": random_cardNo,
+     "cardNo": random_cardNo(),
      "code": "485125",
-     "name": random_name,
-     "phone": random_phone_number,
-     "mailAddr": random_email,
+     "name": random_name(),
+     "phone": random_phone_number(),
+     "mailAddr": random_email(),
+     "idNo": random_cerNO(),
      "tradeCode": "CG1044",
      "respCode": "000000"
      },
     {
         "caseName": "注册成功_融资人",
-        "registerPhone": random_phone_number,
+        "registerPhone": random_phone_number(),
         "merchantNo": "131010000011003",
         "custType": "03",
         "callbackUrl": callbackUrl,
         "responsePath": responsePath,
-        "cardNo": random_cardNo,
+        "cardNo": random_cardNo(),
         "code": "485125",
-        "name": random_name,
-        "phone": random_phone_number,
-        "mailAddr": random_email,
+        "name": random_name(),
+        "phone": random_phone_number(),
+        "mailAddr": random_email(),
+        "idNo": random_cerNO(),
         "tradeCode": "CG1044",
         "respCode": "000000"
     }

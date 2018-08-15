@@ -25,10 +25,12 @@ class Header(object):
         }
     
     request_headers_page = {
-        "accept-encoding": "gzip, deflate",
-        "connection": "Keep-Alive",
-        "content-type": "application/json",
-        "host": "10.10.10.185:9008"
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Encoding": "gzip, deflate",
+        "Accept-Language": "zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Connection": "Keep-Alive",
+        "Host": "10.10.10.185:9008"
     }
 
 

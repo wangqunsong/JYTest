@@ -26,7 +26,7 @@ def random_name():
 
 def random_cardNo():
     """随机民生银行借记卡"""
-    return  "621691021219" + random.randint(0000,9999)
+    return  "621691021219" + str(random.randint(0000,9999))
 
 
 def random_address():
@@ -89,3 +89,6 @@ def factory_choice_generator(values):
 if __name__ == '__main__':
     print(random_cerNO())
     print(random_str(8,8))
+    print(random_phone_number())
+    print(random_name())
+    print(random_cardNo())
