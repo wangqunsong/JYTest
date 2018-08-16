@@ -6,7 +6,8 @@
 # @File    : CG1044_params.py
 # @Software: PyCharm
 """
-from utils.base.generator import random_phone_number, random_cerNO
+from utils.base.IDgenerator import gen_id_card
+from utils.base.generator import random_phone_number
 from utils.base.generator import random_cardNo
 from utils.base.generator import random_name
 from utils.base.generator import random_email
@@ -38,7 +39,7 @@ cg1044 = (
      "name": random_name(),
      "phone": random_phone_number(),
      "mailAddr": random_email(),
-     "idNo": random_cerNO(),
+     "idNo": gen_id_card(),
      "tradeCode": "CG1044",
      "respCode": "000000"
      },
@@ -54,7 +55,7 @@ cg1044 = (
         "name": random_name(),
         "phone": random_phone_number(),
         "mailAddr": random_email(),
-        "idNo": random_cerNO(),
+        "idNo": gen_id_card(),
         "tradeCode": "CG1044",
         "respCode": "000000"
     }

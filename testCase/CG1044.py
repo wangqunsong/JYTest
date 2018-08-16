@@ -25,7 +25,7 @@ class TestCG1044(unittest.TestCase):
     '''
     TestCG1044测试类
     '''
-    
+
     def setParameters(
             self,
             caseName,
@@ -68,16 +68,16 @@ class TestCG1044(unittest.TestCase):
         self.mailAddr = str(mailAddr)
         self.idNo = str(idNo)
         self.respCode = str(respCode)
-    
+
     def setUp(self):
         self.interface_url = Config().get('cg1044')
         self.sign_encrypt_url = "http://192.168.20.128:8081/sign_and_encrypt"
         self.decrypt_and_verify_url = "http://192.168.20.128:8081/decrypt_and_verify"
-        
+
         self.submit_url = "http://10.10.10.185:9008/dep-page-service/submit"
         self.submit_all_url = "http://10.10.10.185:9008/dep-page-service/submitAll"
         self.common_send_message_url = "http://10.10.10.185:9008/dep-page-service/sendSms?"
-        
+
         self.encrypt_headers = Header.encrypt_decrypt_headers
         self.http_header = Header().request_headers_page
         self.merOrderNo = random_str(5, 10)
@@ -112,7 +112,7 @@ class TestCG1044(unittest.TestCase):
                 self.sign_and_encrypt_data), headers=self.encrypt_headers)
         sign_and_encrypt_response_txt = json.loads(
             sign_and_encrypt_response.text)
-        
+
         self.client = HTTPClient(
             url=self.interface_url,
             method='POST',
@@ -125,73 +125,61 @@ class TestCG1044(unittest.TestCase):
             "merchantNo": self.merchantNo,
             "merOrderNo": self.merOrderNo
         }
-    
+
     def test_cg1044(self):
         # 请求返回的密文
         try:
-            # request_response_cg1044 = self.client.send(data=json.dumps(self.data))
-            print("1044接口请求内容：")
-            print(self.data)
-            # request_response_cg1044 = requests.post(self.interface_url,data=json.dumps(self.data),headers=self.http_header)
             request_response_cg1044 = self.client.send(data=self.data)
-            
-            cg1044_cookies = cookielib.LWPCookieJar(filename="CG1044Cookies.txt")
-            cg1044_cookies.save()
-            print("1044接口返回的Cookies：")
-            print(request_response_cg1044.cookies.get_dict())
             token = request_response_cg1044.cookies.get_dict()['token']
             id = request_response_cg1044.cookies.get_dict()['id']
-            print("id的值为{0}，token的值为{1}".format(id, token))
-            
-            # self.decrypt_and_verify_data = {
-            #     "sign": request_response_cg1044_txt['sign'],
-            #     "jsonEnc": request_response_cg1044_txt['jsonEnc'],
-            #     "keyEnc": request_response_cg1044_txt['keyEnc']
-            # }
+            message = request_response_cg1044.cookies.get_dict()['message']
+            #JSESSIONID = request_response_cg1044.cookies.get_dict()['JSESSIONID']
 
-
+            cookies = dict(message=message, id=id, token=token)
 
             # 获取验证码
-            requests_message_url = self.common_send_message_url + "phoneNo=" + self.phone + "&token=" + token + "&merOrderNo=" + self.merOrderNo
+            requests_message_url = self.common_send_message_url + "phoneNo=" + \
+                self.phone + "&token=" + token + "&merOrderNo=" + self.merOrderNo
             print(requests_message_url)
             self.client_message = HTTPClient(
-                url= requests_message_url,
+                url=requests_message_url,
                 method='GET',
                 timeout=10,
-                headers=self.http_header)
+                headers=self.http_header,
+                cookies=cookies)
+
             self.data_message = {
                 "phoneNo": self.phone,
                 "token": token,
                 "merOrderNo": self.merOrderNo
             }
-            
-            
+
             request_validateParam_url = "http://10.10.10.185:9008/dep-page-service/validateParam"
             self.client_validateParam = HTTPClient(
                 url=request_validateParam_url,
                 method='POST',
                 timeout=10,
-                headers=self.http_header
+                headers=self.http_header,
+                cookies=cookies
             )
             self.data_validateParam = {
                 "idNo": self.idNo,
                 "merchantNo": self.merchantNo,
                 "merOrderNo": self.merOrderNo
             }
-            request_response_validateParam = self.client_validateParam.send(data=self.data_validateParam)
-            print("validateParam的请求值为：{0}".format(self.data_validateParam))
-            print("validateParam的响应内容为：{0}".format(request_response_validateParam.text))
-            
-            request_response_message = self.client_message.send(data=self.data_message)
-            print("这是获取验证码的请求内容：{0}".format(self.data_message))
-            print("这是获取验证码接口的返回信息：{0}".format(request_response_message.text))
-            
+            request_response_validateParam = self.client_validateParam.send(
+                data=self.data_validateParam)
+            request_response_message = self.client_message.send(
+                data=self.data_message)
+
             # submit
             self.client_submit = HTTPClient(
                 url=self.submit_url,
                 method='POST',
                 timeout=10,
-                headers=self.http_header)
+                headers=self.http_header,
+                cookies=cookies
+            )
             self.data_submit = {
                 "cardNo": self.cardNo,
                 "code": 485125,
@@ -208,20 +196,19 @@ class TestCG1044(unittest.TestCase):
             }
 
             # request_response_submit = requests.post(self.submit_url,data=self.data_submit,headers=self.http_header)
-            print("这是data_submit的值：")
-            print(self.data_submit)
-            request_response_submit = self.client_submit.send(data=self.data_submit)
-            print("这是submit后的返回值")
-            print(request_response_submit.text)
+            request_response_submit = self.client_submit.send(
+                data=self.data_submit)
             submit_token = token
             submit_cookies = token
-            
+
             # submitAll
             self.client_submitAll = HTTPClient(
                 url=self.submit_all_url,
                 method='POST',
                 timeout=10,
-                headers=self.http_header)
+                headers=self.http_header,
+                cookies=cookies
+            )
             self.data_submitAll = {
                 "payPwd": 111111,
                 "id": submit_cookies,
@@ -229,39 +216,20 @@ class TestCG1044(unittest.TestCase):
             }
 
             # request_response_submitAll = requests.post(self.submit_all_url,data=self.data_submitAll,headers=self.http_header)
-            
-            print("submitAll的值")
-            print(self.data_submitAll)
-            request_response_submitAll = self.client_submitAll.send(data=self.data_submitAll)
-            
-            print("这是submitAll后的返回内容：")
-            print(request_response_submitAll.text)
-            
-            # 解密和验签
-            self.decrypt_and_verify_response = requests.post(
-                self.decrypt_and_verify_url, data=json.dumps(
-                    self.decrypt_and_verify_data), headers=self.encrypt_headers)
-            self.check_result()
+            request_response_submitAll = self.client_submitAll.send(
+                data=self.data_submitAll)
+            respCode = request_response_submitAll.status_code
+            self.assertEquals(respCode, 200)
+            # logger.error(self.request_response_submitAll.text)
+            print("恭喜，开户成功！")
         except requests.exceptions.ConnectTimeout:
             raise TimeoutError
-    
+
     def tearDown(self):
         try:
             pass
         except requests.exceptions.ConnectTimeout:
             raise TimeoutError
-    
-    def check_result(self):
-        self.result = json.loads(self.decrypt_and_verify_response.text)
-        self.check = json.loads(self.result['json'])
-        self.check2 = json.dumps(self.check['body'])
-        self.check3 = json.loads(self.check2)
-        
-        logger.error(self.decrypt_and_verify_response.text)
-        self.assertEqual(self.check3['resultCode'], self.resultCode)
-        print("查询成功，开户结果为：" + self.check3['resultMsg'])
-        print("查询的响应报文为：")
-        print(self.check)
 
 
 if __name__ == '__main__':
