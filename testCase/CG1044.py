@@ -20,6 +20,7 @@ from utils.log import logger
 import http.cookiejar as cookielib
 
 
+interface_no = "cg1044"
 @paramunittest.parametrized(*cg1044)
 class TestCG1044(unittest.TestCase):
     '''
@@ -70,14 +71,15 @@ class TestCG1044(unittest.TestCase):
         self.respCode = str(respCode)
 
     def setUp(self):
-        self.interface_url = Config().get('cg1044')
-        self.sign_encrypt_url = "http://192.168.20.128:8081/sign_and_encrypt"
-        self.decrypt_and_verify_url = "http://192.168.20.128:8081/decrypt_and_verify"
+        self.interface_url = Config().get('page_interface',index=0)['common'] + interface_no
+        self.sign_encrypt_url = Config().get('supportUrl',index=0)['sign_encrypt_url']
+        self.decrypt_and_verify_url = Config().get('supportUrl',index=0)['decrypt_and_verify_url']
 
-        self.submit_url = "http://10.10.10.185:9008/dep-page-service/submit"
-        self.submit_all_url = "http://10.10.10.185:9008/dep-page-service/submitAll"
-        self.common_send_message_url = "http://10.10.10.185:9008/dep-page-service/sendSms?"
-
+        self.submit_url = Config().get('page_interface',index=0)['submit_url']
+        self.submit_all_url = Config().get('page_interface',index=0)['submitAll_url']
+        self.common_send_message_url = Config().get('page_interface',index=0)['common_send_message_url']
+        self.request_validateParam_url = Config().get('page_interface',index=0)['request_validateParam_url']
+        
         self.encrypt_headers = Header.encrypt_decrypt_headers
         self.http_header = Header().request_headers_page
         self.merOrderNo = random_str(5, 10)
@@ -140,7 +142,6 @@ class TestCG1044(unittest.TestCase):
             # 获取验证码
             requests_message_url = self.common_send_message_url + "phoneNo=" + \
                 self.phone + "&token=" + token + "&merOrderNo=" + self.merOrderNo
-            print(requests_message_url)
             self.client_message = HTTPClient(
                 url=requests_message_url,
                 method='GET',
@@ -154,9 +155,8 @@ class TestCG1044(unittest.TestCase):
                 "merOrderNo": self.merOrderNo
             }
 
-            request_validateParam_url = "http://10.10.10.185:9008/dep-page-service/validateParam"
             self.client_validateParam = HTTPClient(
-                url=request_validateParam_url,
+                url=self.request_validateParam_url,
                 method='POST',
                 timeout=10,
                 headers=self.http_header,

@@ -1,17 +1,20 @@
-submit : http://10.10.10.185:9008/dep-page-service/submit
-submitAll : http://10.10.10.185:9008/dep-page-service/submitAll
-cg1001 : http://10.10.10.185:10003/services/cgbiz/cg1001
-cg2001 : http://10.10.10.185:10003/services/cgbiz/cg2001
-cg2002 : http://10.10.10.185:10003/services/cgbiz/cg2002
-cg1044 : http://10.10.10.185:9008/dep-page-service/cg1044
-target_url: http://10.10.10.185:10003/services/cgbiz/
-url:
-    request_url :  http://10.10.10.185:10003/services/cgbiz/
-    sign_url :
-    encrypt_json_url :
-    encrypt_key_url :
+#加密解密地址
+supportUrl :
+    sign_encrypt_url : http://192.168.20.128:8081/sign_and_encrypt
+    decrypt_and_verify_url : http://192.168.20.128:8081/decrypt_and_verify
+#实时接口地址
+realTime_interface:
+    common : http://10.10.10.185:10003/services/cgbiz/
+#页面接口地址
+page_interface:
+    submit_url : http://10.10.10.185:9008/dep-page-service/submit
+    submitAll_url : http://10.10.10.185:9008/dep-page-service/submitAll
+    common_send_message_url : http://10.10.10.185:9008/dep-page-service/sendSms?
+    request_validateParam_url : http://10.10.10.185:9008/dep-page-service/validateParam
+    common : http://10.10.10.185:9008/dep-page-service/
 excel:
     case_path : 'E:\\Git\\JYTest\\testdata\\interface\\case.xlsx'
+#邮件配置
 email:
     email_server : smtp.163.com
     email_on_off : 'off'
@@ -20,9 +23,10 @@ email:
     email_receiver : wangqunsong@jytpay.com
     email_subject : 'JYT--接口测试报告'
     email_content :
+#日志配置
 log:
-    file_name: test.log
-    backup: 5
-    console_level: WARNING
-    file_level: DEBUG
-    pattern: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    file_name : test.log
+    backup : 5
+    console_level : WARNING
+    file_level : DEBUG
+    pattern : '%(asctime)s - %(name)s - %(levelname)s - %(message)s'

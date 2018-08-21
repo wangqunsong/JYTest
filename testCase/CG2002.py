@@ -19,6 +19,7 @@ from utils.configHttpHeader import Header
 from utils.log import logger
 
 excel_cg2002 = ConfigExcel().get_xls_row("caselist.xlsx", "CG2002")
+interface_no = "cg2002"
 
 
 @paramunittest.parametrized(*excel_cg2002)
@@ -64,9 +65,9 @@ class TestCG2002(unittest.TestCase):
         self.response = None
 
     def setUp(self):
-        self.interface_url = Config().get('cg2002')
-        self.sign_encrypt_url = "http://192.168.20.128:8081/sign_and_encrypt"
-        self.decrypt_and_verify_url = "http://192.168.20.128:8081/decrypt_and_verify"
+        self.interface_url = Config().get('realTime_interface',index=0)['common'] + interface_no
+        self.sign_encrypt_url = Config().get('supportUrl',index=0)['sign_encrypt_url']
+        self.decrypt_and_verify_url = Config().get('supportUrl',index=0)['decrypt_and_verify_url']
         self.encrypt_headers = Header.encrypt_decrypt_headers
         self.http_header = Header().request_headers
         self.merOrderNo = random_str(5, 10)
@@ -91,6 +92,7 @@ class TestCG2002(unittest.TestCase):
 
         # 加密
         self.request_string = json.dumps(cg2002_json)
+        
         self.sign_and_encrypt_data = {
             "unencrypt_string": self.request_string
         }
@@ -139,7 +141,6 @@ class TestCG2002(unittest.TestCase):
         self.check = json.loads(self.result['json'])
         self.check2 = json.dumps(self.check['body'])
         self.check3 = json.loads(self.check2)
-
         logger.error(self.decrypt_and_verify_response.text)
         self.assertEqual(self.check3['resultCode'], self.resultCode)
         print("查询成功，开户结果为：" + self.check3['resultMsg'])
