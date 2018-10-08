@@ -7,20 +7,22 @@
 # @Software: PyCharm
 """
 import json
+import os
 import unittest
 import paramunittest
 import requests
 from utils.base.generator import *
-from utils.configBase import Config
-from utils.configExcel import ConfigExcel
+from utils.configBase import Config, BASE_PATH
 from utils.configHttp import HTTPClient
 from utils.configHttpHeader import Header
+from utils.configYML import ConfigYML
 from utils.log import logger
 
-excel_cg2001 = ConfigExcel().get_xls_row("caselist.xlsx", "CG2001")
+case_file = os.path.join(BASE_PATH, 'testCase/CaseList/CG2001.yml')  # .yml用例文件路径
+cg2001 = ConfigYML(case_file).load_case()
 interface_no = 'cg2001'
 
-@paramunittest.parametrized(*excel_cg2001)
+@paramunittest.parametrized(*cg2001)
 class TestCG2001(unittest.TestCase):
     '''
     TestCG2001测试类

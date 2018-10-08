@@ -1,9 +1,5 @@
 # JYTest
-JYTest使用python3 + request开发，适用于http请求的接口自动化测试。
-
-### 前言
-
-
+JYTest使用python3 + request开发，适用于http请求的接口自动化测试，后续将继续扩展对xml格式的支持。
 
 ### 框架结构
 

@@ -1,0 +1,44 @@
+Case1 :
+    - CaseName : "余额查询_商户账户"
+    - merchantNo : "131010000011003"
+    - tradeCode : "CG2001"
+    - acctNo : "13101000001100300"
+    - respCode : "000000"
+    - respDesc : "成功"
+
+Case2 :
+    - CaseName : "余额查询_客户账户"
+    - merchantNo : "131010000011003"
+    - tradeCode : "CG2001"
+    - acctNo : "1003000036101"
+    - respCode : "000000"
+    - respDesc : "成功"
+
+Case3 :
+    - CaseName : "账户号为空"
+    - merchantNo : "131010000011003"
+    - tradeCode : "CG2001"
+    - acctNo : ""
+    - respCode : "E90051"
+    - respDesc : "账户号为空"
+
+Case4 :
+    - CaseName : "接口编号错误"
+    - merchantNo : "131010000011003"
+    - tradeCode : "CG2000"
+    - acctNo : "13101000001100300"
+    - respCode : "E90064"
+    - respDesc : "接口编号错误"
+Case5 :
+    - CaseName : "接口参数为空"
+    - merchantNo : "131010000011003"
+    - tradeCode : ""
+    - acctNo : "13101000001100300"
+    - respCode : "E90064"
+    - respDesc : "接口编号错误"
+
+
+
+
+
+

@@ -1,7 +1,7 @@
 #加密解密地址
 supportUrl :
-    sign_encrypt_url : http://192.168.20.128:8081/sign_and_encrypt
-    decrypt_and_verify_url : http://192.168.20.128:8081/decrypt_and_verify
+    sign_encrypt_url : http://10.10.10.23:8081/sign_and_encrypt
+    decrypt_and_verify_url : http://10.10.10.23:8081/decrypt_and_verify
 #实时接口地址
 realTime_interface:
     common : http://10.10.10.185:10003/services/cgbiz/

@@ -6,7 +6,7 @@
 # @File    : ORM.py
 # @Software: PyCharm
 """
-import MySQLdb
+import pymysql
 
 class Field(object):
     pass
@@ -87,7 +87,7 @@ class Database(object):
 
     @classmethod
     def connect(cls, **db_config):
-        cls.conn = MySQLdb.connect(host=db_config.get('host', 'localhost'), port=int(db_config.get('port', 3306)),
+        cls.conn = pymysql.connect(host=db_config.get('host', 'localhost'), port=int(db_config.get('port', 3306)),
                                    user=db_config.get('user', 'root'), passwd=db_config.get('password', ''),
                                    db=db_config.get('database', 'test'), charset=db_config.get('charset', 'utf8'))
         cls.conn.autocommit(cls.autocommit)
@@ -99,7 +99,7 @@ class Database(object):
             cls.connect(**cls.db_config)
         try:
             cls.conn.ping()
-        except MySQLdb.OperationalError:
+        except pymysql.OperationalError:
             cls.connect(**cls.db_config)
         return cls.conn
 

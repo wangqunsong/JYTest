@@ -71,7 +71,6 @@ def factory_choice_generator(values):
 
 
 if __name__ == '__main__':
-    print(random_cerNO())
     print(random_str(8,8))
     print(random_phone_number())
     print(random_name())

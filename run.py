@@ -83,7 +83,7 @@ class Test(object):
                 self.logger.info("********测试开始********")
                 with open(report, 'wb') as f:
                     runner = HTMLTestRunner.HTMLTestRunner(
-                        f, title='JYTest接口测试', description='小小王的接口测试')
+                        f, title='JYTest接口测试报告', description='小小王的接口测试')
                     runner.run(suite)
             else:
                 self.logger.info("未找到测试case，请检查caselist")

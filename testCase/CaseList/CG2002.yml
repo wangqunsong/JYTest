@@ -1,15 +1,3 @@
-Case0 :
-    - CaseName : "Open_account_query_with_orderNo_success"
-    - merchantNo : "131010000011003"
-    - tradeCode : "CG2002"
-    - queryFlow : "214120491020001"
-    - tradeCode_body : "CG1044"
-    - flowType : "01"
-    - resultCode : "000000"
-    - resultMsg : "成功"
-    - respCode : "000000"
-    - respDesc : "成功"
-
 Case1 :
     - CaseName : "通过订单号查询_交易成功"
     - merchantNo : "131010000011003"

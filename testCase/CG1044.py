@@ -210,7 +210,7 @@ class TestCG1044(unittest.TestCase):
                 cookies=cookies
             )
             self.data_submitAll = {
-                "payPwd": 111111,
+                "payPwd": "111111",
                 "id": submit_cookies,
                 "token": submit_token,
             }

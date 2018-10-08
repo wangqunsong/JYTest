@@ -8,21 +8,22 @@
 """
 
 import json
+import os
 import unittest
 import paramunittest
 import requests
 from utils.base.generator import *
-from utils.configBase import Config
-from utils.configExcel import ConfigExcel
+from utils.configBase import Config, BASE_PATH
 from utils.configHttp import HTTPClient
 from utils.configHttpHeader import Header
+from utils.configYML import ConfigYML
 from utils.log import logger
 
-excel_cg2002 = ConfigExcel().get_xls_row("caselist.xlsx", "CG2002")
+case_file = os.path.join(BASE_PATH, 'testCase/CaseList/CG2002.yml')  # .yml用例文件路径
+cg2002 = ConfigYML(case_file).load_case()
 interface_no = "cg2002"
 
-
-@paramunittest.parametrized(*excel_cg2002)
+@paramunittest.parametrized(*cg2002)
 class TestCG2002(unittest.TestCase):
     '''
     TestCG2002测试类
