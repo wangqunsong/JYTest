@@ -3,15 +3,15 @@ JYTest使用python3 + request开发，适用于http请求的接口自动化测�
 
 ### 框架结构
 
-![结构](http://p7dnmc2z3.bkt.clouddn.com/JYTest%E6%9E%B6%E6%9E%84.png)
+![JYTest架构.png](https://i.loli.net/2018/11/21/5bf57d3862f42.png)
 
 ### 项目结构
 
-![项目结构](http://p7dnmc2z3.bkt.clouddn.com/JYTest.png)
+![JYTest.png](https://i.loli.net/2018/11/21/5bf57d353b9b9.png)
 
 ### 接口请求
 
-![接口请求](http://p7dnmc2z3.bkt.clouddn.com/%E4%B8%9A%E5%8A%A1HTTP%E8%AF%B7%E6%B1%82.jpg)
+![业务HTTP请求.jpg](https://i.loli.net/2018/11/21/5bf57c67945c8.jpg)
 
 
 
