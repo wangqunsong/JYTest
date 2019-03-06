@@ -28,7 +28,7 @@ METHODS = [
 
 class UnSupportMethodException(Exception):
     """当传入的method的参数不是支持的类型时抛出此异常。"""
-    pass
+    logger.info("暂不支持此方法，请联系管理员！")
 
 
 class HTTPClient(object):

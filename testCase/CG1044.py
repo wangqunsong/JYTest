@@ -213,6 +213,7 @@ class TestCG1044(unittest.TestCase):
                 "payPwd": "111111",
                 "id": submit_cookies,
                 "token": submit_token,
+                "bankSms" : "123456"
             }
 
             # request_response_submitAll = requests.post(self.submit_all_url,data=self.data_submitAll,headers=self.http_header)

@@ -18,10 +18,10 @@ from utils.configHttpHeader import Header
 from utils.configYML import ConfigYML
 from utils.log import logger
 
+
 case_file = os.path.join(BASE_PATH, 'testCase/CaseList/CG2001.yml')  # .yml用例文件路径
 cg2001 = ConfigYML(case_file).load_case()
 interface_no = 'cg2001'
-
 @paramunittest.parametrized(*cg2001)
 class TestCG2001(unittest.TestCase):
     '''
@@ -106,7 +106,7 @@ class TestCG2001(unittest.TestCase):
 
     def test_cg2001(self):
         try:
-            request_response = self.client.send(data=json.dumps(self.data))
+            request_response = self.client.send(data=json.dumps(self.data).encode())
             request_response_txt = json.loads(request_response.text)
             self.decrypt_and_verify_data = {
                 "sign": request_response_txt['sign'],
@@ -128,8 +128,8 @@ class TestCG2001(unittest.TestCase):
 
     def check_result(self):
         self.result = json.loads(self.decrypt_and_verify_response.text)
-        self.check = json.loads(self.result['json'])
-        self.check2 = json.dumps(self.check['head'])
+        self.check = json.loads((self.result['json']))
+        self.check2 = json.dumps((self.check['head']))
         self.check3 = json.loads(self.check2)
         logger.error(self.decrypt_and_verify_response.text)
         #self.assertEqual(self.check3['respCode'], self.respCode)

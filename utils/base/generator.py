@@ -25,8 +25,8 @@ def random_name():
     return fake.name()
 
 def random_cardNo():
-    """随机民生银行借记卡"""
-    return  "621691021219" + str(random.randint(0000,9999))
+    """随机招商银行借记卡"""
+    return  "621485210529" + str(random.randint(0000,9999))
 
 
 def random_address():

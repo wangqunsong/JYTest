@@ -7,6 +7,7 @@
 # @Software: PyCharm
 """
 import os
+import codecs
 import yaml
 from utils.configBase import BASE_PATH
 
@@ -15,7 +16,7 @@ class ConfigYML:
         self.case_file = case_file
     
     def load_case(self):
-        with open( self.case_file, 'rb') as f:
+        with open(self.case_file,'rb') as f:
             yml_case_file = list(yaml.safe_load_all(f))
         order = []
         a = list(yml_case_file[0].keys())
