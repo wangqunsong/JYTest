@@ -22,6 +22,10 @@ class API(Base):
     url = Column(String(length=100), nullable=False)
     body = Column(String(length=10), nullable=False)
     project_id = Column(Integer)
+
+class Student(Base):
+    __tablename__ = "student"
+    id = Column(Integer)
     
     
     

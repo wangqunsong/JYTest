@@ -10,8 +10,16 @@ from sqlalchemy import create_engine
 from utils.configDB import API
 from  sqlalchemy.orm import sessionmaker
 
+#数据库信息
+HOSTNAME = '127.0.0.1'
+PORT = '3306'
+DATABASE = 'TEST'
+USERNAME = 'root'
+PASSWORD = '123456'
+CHARSET = 'charset=utf8'
+DB_URI = "mysql+pymysql://{}:{}@{}:{}/{}?{}".format(USERNAME,PASSWORD,HOSTNAME,PORT,DATABASE,CHARSET)
 #连接数据库
-engine = create_engine("mysql+pymysql://root:123456@localhost/mockserver?charset=utf8")
+engine = create_engine(DB_URI)
 
 #创建会话
 session = sessionmaker(engine)

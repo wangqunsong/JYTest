@@ -1,0 +1,5 @@
+2018-07-18 15:00:13,374 - JYTest - INFO - ********测试开始********
+2018-07-18 15:00:13,568 - JYTest - ERROR - {"json":"{\"head\":{\"merOrderNo\":\"IxHpU\",\"merchantNo\":\"131010000011003\",\"respCode\":\"E90003\",\"respDesc\":\"账户未找到\",\"tradeCode\":\"CG2001\",\"tradeDate\":\"20180718\",\"tradeTime\":\"150013\",\"tradeType\":\"01\",\"version\":\"1.0.0\"}}","result":true,"sK":"8c546d7ad5cd5889"}
+2018-07-18 15:00:13,745 - JYTest - ERROR - {"json":"{\"body\":{\"acctStatus\":\"00\",\"actualAmt\":1916.57,\"pledgedAmt\":0.00,\"preLicAmt\":0.00,\"totalAmt\":1916.57},\"head\":{\"merOrderNo\":\"RmVWkOoozF\",\"merchantNo\":\"131010000011003\",\"respCode\":\"000000\",\"respDesc\":\"成功\",\"tradeCode\":\"CG2001\",\"tradeDate\":\"20180718\",\"tradeTime\":\"150013\",\"tradeType\":\"01\",\"version\":\"1.0.0\"}}","result":true,"sK":"4938ba5ebcf49826"}
+2018-07-18 15:00:44,450 - JYTest - INFO - ********测试结束********
+2018-07-18 15:00:44,451 - JYTest - INFO - 邮件发送开关为off,不发送邮件！
