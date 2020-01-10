@@ -18,9 +18,9 @@ excel:
 email:
     email_server : smtp.163.com
     email_on_off : 'off'
-    email_sender : 18392169938@163.com
+    email_sender : 
     email_password :
-    email_receiver : wangqunsong@jytpay.com
+    email_receiver : 
     email_subject : 'JYT--接口测试报告'
     email_content :
 #日志配置
