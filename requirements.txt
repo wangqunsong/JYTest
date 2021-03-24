@@ -1,7 +1,7 @@
 jmespath==0.9.3
 PyMySQL==0.8.0
 Faker==0.8.13
-rsa==3.4.2
+rsa==4.1
 requests==2.20.0
 ParamUnittest==0.2
 xlrd==1.1.0
